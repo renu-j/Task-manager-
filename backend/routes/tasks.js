@@ -2,7 +2,6 @@ const express = require('express');
 const router  = express.Router();
 const db      = require('../config/db');
 
-// GET /tasks — load all tasks
 router.get('/', (req, res) => {
   const sql = 'SELECT * FROM tasks ORDER BY created_at DESC';
   db.query(sql, (err, results) => {
@@ -11,7 +10,6 @@ router.get('/', (req, res) => {
   });
 });
 
-// POST /tasks — create a new task
 router.post('/', (req, res) => {
   const { text, priority } = req.body;
   const sql = 'INSERT INTO tasks (text, priority) VALUES (?, ?)';
@@ -26,7 +24,6 @@ router.post('/', (req, res) => {
   });
 });
 
-// PUT /tasks/:id — mark task complete or incomplete
 router.put('/:id', (req, res) => {
   const { completed } = req.body;
   const sql = 'UPDATE tasks SET completed = ? WHERE id = ?';
@@ -36,7 +33,6 @@ router.put('/:id', (req, res) => {
   });
 });
 
-// DELETE /tasks/:id — delete a task
 router.delete('/:id', (req, res) => {
   const sql = 'DELETE FROM tasks WHERE id = ?';
   db.query(sql, [req.params.id], (err) => {
